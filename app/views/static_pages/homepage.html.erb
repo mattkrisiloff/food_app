@@ -1,5 +1,20 @@
-hello
+<h1>Welcome to Food@3301!</h1>
 
-<%@meals.each do |meal| %>
-<h2><%= meal.title %></h2>
+<h4>We've made this website to help us gauge exactly how many people would like food. We're cooking a meal tonight, and if you're around, a meal tomorrow for Thanksgiving. Let us know if you're interested!</h4>
+
+<br>
+<br>
+
+<%@meals.each do |meal, i| %>
+	<%if meal.date.day == Time.now.day%>
+		<h2>Today: <%= meal.title%></h2>
+	<%else%>
+		<h2>Tomorrow (Thanksgiving): <%= meal.title%></h2>
+	<%end%>
+	<h3><%= meal.description%></h3>
+	<h3>Cost: <%= meal.price%></h3>
+	<h3>Number of meals available: <%=meal.slots%></h3>
+	<br>
 <%end%>
+
+<h4>If you'd like food, please buy it here online. If you're unable to purchase it online and are still interested, text Matthew at 310-922-0005 with the number of meals you want, as well as your phone number. Thank you!
