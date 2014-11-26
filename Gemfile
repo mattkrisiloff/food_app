@@ -5,6 +5,7 @@ ruby '2.0.0'
 gem 'rails', '4.0.4'
 
 gem 'pg'
+gem 'figaro'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.2'
