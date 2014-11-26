@@ -7,17 +7,30 @@
 		<br>
 		<br>
 
-		<%@meals.each do |meal, i| %>
-			<%if meal.date.day == Time.now.day%>
-				<h2>Today: <%= meal.title%></h2>
-			<%else%>
-				<h2>Tomorrow (Thanksgiving): <%= meal.title%></h2>
-			<%end%>
-			<h3><%= meal.description%></h3>
-			<h3>Cost: <%= meal.price%></h3>
-			<h3>Number of meals available: <%=meal.slots%></h3>
-			<br>
-		<%end%>
+<%@meals.each do |meal, i| %>
+	<%if meal.date.day == Time.now.day%>
+		<h2>Today: <%= meal.title%></h2>
+	<%else%>
+		<h2>Tomorrow (Thanksgiving): <%= meal.title%></h2>
+	<%end%>
+	<h3><%= meal.description%></h3>
+	<h3>Number of meals available: <%=meal.slots%></h3>
+	<%= form_tag charges_path do %>
+		<article>
+			<label class ="amount">
+				<span>Cost: <%= number_to_currency(meal.price) %></span>
+			</label>
+		</article>
+	
+		<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+			data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+			data-description= "A month's subscription"
+			data-amount= "<%= meal.price*100 %>"
+		</script>
+	<% end %>
+	
+	<br>
+<%end%>
 
 		<h4>If you'd like food, please buy it here online. If you're unable to purchase it online and are still interested, text Matthew at 310-922-0005 with the number of meals you want, as well as your phone number. Thank you!
 	</div>
