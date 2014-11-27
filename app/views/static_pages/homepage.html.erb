@@ -1,27 +1,26 @@
 <script src="https://checkout.stripe.com/v2/checkout.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
 
-<div class="container">
+<div class="container homepage-container">
 	<div class="sixteen columns">
-		<h1>Welcome to Food@3301!</h1>
+		<h1>Food@3301</h1>
 
-		<h4>We've made this website to help us gauge exactly how many people would like food. We're cooking a meal tonight, and if you're around, a meal tomorrow for Thanksgiving. Let us know if you're interested!</h4>
+		<h5>We've made this website to help us gauge exactly how many people would like food. We're cooking a meal tonight, and if you're around, a meal tomorrow for Thanksgiving. Let us know if you're interested!</h5>
 
 		<br>
 		<br>
 
 <% @meals.each do |meal, i| %>
 	<% if meal.date.day == Time.now.day %>
-		<h2>Today: <%= meal.title %></h2>
+		<h3>Today: <%= meal.title %></h3>
 	<% else %>
-		<h2>Tomorrow (Thanksgiving): <%= meal.title %></h2>
+		<h3>Tomorrow (Thanksgiving): <%= meal.title %></h3>
 	<% end %>
-	<h3><%= meal.description %></h3>
-	<h3>Number of meals available: <%= meal.slots %></h3>
+	<h4><%= meal.description %></h4>
 	
 	<%= form_tag(charges_path(:price => (meal.price*100).to_i, :meal_id => meal.id)) do %>
 	
-	<%= label_tag(:portions, "Number of portions") %>
+	<%= label_tag(:portions, "Number of portions (" + meal.slots.to_s + " available)") %>
 	<%= select_tag(:portions, options_for_select([[1,1],[2,2],[3,3],[4,4],[5,5]]), :class => "portions-select", :id => meal.id) %>
 	
 		<label class="amount" data-price="<%= meal.price %>" data-id="<%= meal.id %>">
@@ -32,13 +31,13 @@
 			data-id="<%= meal.id %>"
 			data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
 			data-description= "<%= meal.title %>"
-			data-label="Pay Secure">
+			data-label="Reserve Meal">
 		</script>
 	<% end %>
 	
 	<br>
 <% end %>
 
-		<h4>If you'd like food, please buy it here online. If you're unable to purchase it online and are still interested, text Matthew at 310-922-0005 with the number of meals you want, as well as your phone number. Thank you!
+		<p>If you'd like food, please buy it here online. If you're unable to purchase it online and are still interested, text Matthew at 310-922-0005 with the number of meals you want, as well as your phone number. Thank you!</p>
 	</div>
 </div>
